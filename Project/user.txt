@@ -1,0 +1,7 @@
+admin,admin,admin,0,0
+a,a,a,12,0
+b,b,b,12,0
+yash123,Yash Gupta,yash123,19,0
+tyagi,aviral,12345,18,0
+dev123,dev,dev,19,0
+yash12,yash,yash13,10,0
