@@ -1,7 +1,9 @@
 import user_data_handler
+import analysis
+from tabulate import tabulate
 books=[]
 def get_data():
-    file_path = 'C:/Users/yashg/Documents/Programs/Python/Project/books.txt'
+    file_path = 'C:/Users/yashg/Documents/Programs/Python/Project/Library managment/books.txt'
     try:
         with open(file_path, 'r') as file:
             for line in file:
@@ -11,24 +13,30 @@ def get_data():
     except Exception as e:
         print(f"An error occurred: {e}")
 
+def get_book_list():
+    get_data()
+    return books
+
 def get_book_data(line):
     words = line.split(',')
     book_name=words[0]
     book_count=int(words[1])
     book_price=int(words[2])
-    book={'name':book_name , 'count' :book_count,'price':book_price }
+    book_sold=int(words[3])
+    book={'name':book_name , 'count' :book_count,'price':book_price ,'sold':book_sold}
     books.append(book)
 
 def add_book():
     book_name=input("Enter Book Name--")
     book_count=int(input("Enter Book Count--"))
     book_price=int(input("Enter Book Price--"))
-    book={'name':book_name , 'count':book_count , 'price':book_price}
+    book={'name':book_name , 'count':book_count , 'price':book_price,'sold':0}
     books.append(book)
 
 def print_book_details():
-    for i in range(0,len(books)):
-        print("id-",(i),books[i])
+    keys_to_include = ['name', 'price']
+    filtered_data = [{key: item[key] for key in keys_to_include} for item in books]
+    print(tabulate(filtered_data, headers="keys", tablefmt="grid"))
 
 def remove_book():
     print_book_details()
@@ -63,11 +71,11 @@ def search_book():
 
 
 def fill_book_data():
-    file_path = 'C:/Users/yashg/Documents/Programs/Python/Project/books.txt'
+    file_path = 'C:/Users/yashg/Documents/Programs/Python/Project/Library managment/books.txt'
     try:
         with open(file_path, 'w') as file:
             for i in range(0,len(books)):
-                content=books[i]['name']+","+str(books[i]['count'])+","+str(books[i]['price'])
+                content=books[i]['name']+","+str(books[i]['count'])+","+str(books[i]['price'])+","+str(books[i]['sold'])
                 file.write(content+'\n')
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -113,7 +121,7 @@ def books_data_controller_for_user(id):
         print("Enter 4 to go back to Main Menu")
         option=int(input())
         if option==1:
-            print_book_details()
+            analysis.controller_for_user()
         elif option==2:
             search_book()
         elif option==3:
@@ -168,6 +176,7 @@ def update_inventory(book_cart):
                 break
             else:
                 books[i]['count']-=1
+                books[i]['sold']+=1
 
         
 
@@ -175,4 +184,3 @@ def update_inventory(book_cart):
     
 
     
-

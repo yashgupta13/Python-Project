@@ -1,5 +1,7 @@
 import books_data_handler
 import user_data_handler
+import analysis
+#this soruce code provides an interface to user to deal with all his requests
 def admin_inteface():
     while(True):
         print("Enter 1 to Update catalogue")
@@ -7,7 +9,8 @@ def admin_inteface():
         print("Enter 3 to Remove User")
         print("Enter 4 to Update User Information")
         print("Enter 5 to Update User Bill")
-        print("Enter 6 exit")
+        print("Enter 6 for Sales Analysis")
+        print("Enter 7 exit")
         option=int(input())
 
         if option==1:
@@ -24,8 +27,9 @@ def admin_inteface():
             amount=int(input("Enter Amount to be Added--"))
             user_data_handler.set_bill_for_user(id,amount)
         elif option==6:
+            analysis.controller()
+        elif option==7:
             print("Exit")
             break
         else:
             print("Wrong Option")
-            
